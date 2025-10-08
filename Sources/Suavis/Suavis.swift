@@ -6,9 +6,11 @@
 /// 主库类
 public final class Suavis: Sendable {
     
+    public static let shared = Suavis()
+    
     let configuration: Configuration
     
-    public init(configuration: Configuration = .default) {
+    private init(configuration: Configuration = .default) {
         self.configuration = configuration
     }
     
@@ -24,6 +26,8 @@ public final class Suavis: Sendable {
         return "Data fetched successfully"
     }
 }
+
+public typealias SV = Suavis
 
 // 配置结构体
 public struct Configuration: Sendable {
