@@ -1,51 +1,47 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+// Sources/Suavis/Suavis.swift
 
-// Sources/MySwiftLibrary/MySwiftLibrary.swift
-
-/// 主库类
-public final class Suavis: Sendable {
+/// Suavis - 优雅的 Swift 工具库
+///
+/// # 简介
+/// 一个设计精美的 Swift 库，提供简洁的 API 和强大的功能。
+public enum Suavis {
+    // MARK: - 库信息
     
-    public static let shared = Suavis()
+    /// 库版本号
+    public static let version = "1.0.0"
     
-    let configuration: Configuration
+    /// 库名称
+    public static let name = "Suavis"
     
-    private init(configuration: Configuration = .default) {
-        self.configuration = configuration
+    /// 作者信息
+    public static let author = "Your Name"
+    
+    // MARK: - 服务实例
+    
+    private static let service: SuavisService = DefaultSuavisService.shared
+    
+    // MARK: - 公开 API
+    
+    /// 打招呼功能
+    /// - Parameter name: 名称
+    /// - Returns: 问候语
+    public static func greet(name: String) -> String {
+        return service.greet(name: name)
     }
     
-    /// 示例公共方法
-    public func greet(name: String) -> String {
-        return "Hello, \(name)!"
+    /// 获取数据（异步）
+    /// - Returns: 获取的数据
+    public static func fetchData() async throws -> String {
+        return try await service.fetchData()
     }
     
-    /// 异步方法示例
-    public func fetchData() async throws -> String {
-        // 模拟异步操作
-        try await Task.sleep(nanoseconds: 1_000_000_000)
-        return "Data fetched successfully"
+    /// 当前配置
+    public static var configuration: Configuration {
+        return service.configuration
     }
-}
-
-public typealias SV = Suavis
-
-// 配置结构体
-public struct Configuration: Sendable {
-    public let apiKey: String
-    public let environment: Environment
     
-    public static let `default` = Configuration(
-        apiKey: "",
-        environment: .development
-    )
-    
-    public init(apiKey: String, environment: Environment) {
-        self.apiKey = apiKey
-        self.environment = environment
+    /// 初始化库
+    public static func initialize() {
+        print("🎉 \(name) v\(version) 已初始化")
     }
-}
-
-public enum Environment: Sendable {
-    case development
-    case production
 }
