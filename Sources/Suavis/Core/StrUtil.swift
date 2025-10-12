@@ -9,7 +9,20 @@ import Foundation
 
 /// 字符串工具类
 public enum StrUtil {
-    /// 判断字符串是否为空
+    /// 判断字符串是否为空或 nil
+    ///
+    /// ## 函数签名
+    /// `isEmpty(_ str: String?) -> Bool`
+    ///
+    /// - Parameter str: 要检查的字符串，可选类型
+    /// - Returns: 如果字符串为 nil 或空字符串返回 true，否则返回 false
+    ///
+    /// ## 示例
+    /// ```swift
+    /// StrUtil.isEmpty(nil)       // true
+    /// StrUtil.isEmpty("")        // true
+    /// StrUtil.isEmpty("hello")   // false
+    /// ```
     public static func isEmpty(_ str: String?) -> Bool {
         return str?.isEmpty ?? true
     }
@@ -26,4 +39,10 @@ public enum StrUtil {
             index == 0 ? component.lowercased() : component.capitalized
         }.joined()
     }
+}
+
+public typealias _StrUtil = StrUtil
+
+extension Suavis {
+    public typealias StrUtil = _StrUtil
 }
