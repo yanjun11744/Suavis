@@ -6,32 +6,32 @@
 //
 
 import Foundation
+import Atomics
 
 /// ID生成器实现类
-public final class IdGeneratorImpl {
+public final class IdGeneratorImpl: Sendable {
     public static let shared = IdGeneratorImpl()
     
-    private var workerId: Int = 0
-    private var sequence: Int = 0
-    private let lock = NSLock()
+    private let workerId: ManagedAtomic<Int>
+    private let sequence: ManagedAtomic<Int>
     
-    private init() {}
+    private init() {
+        self.workerId = ManagedAtomic(0)
+        self.sequence = ManagedAtomic(0)
+    }
     
     /// 配置工作节点ID
     public func configure(workerId: Int) {
-        lock.lock()
-        defer { lock.unlock() }
-        self.workerId = workerId
+        self.workerId.store(workerId, ordering: .relaxed)
     }
     
     /// 生成唯一ID（雪花算法）
     public func nextId() -> Int64 {
-        lock.lock()
-        defer { lock.unlock() }
-        
-        sequence += 1
+        let currentSequence = sequence.wrappingIncrementThenLoad(ordering: .relaxed)
         let timestamp = Int64(Date().timeIntervalSince1970 * 1000)
-        return (timestamp << 22) | (Int64(workerId) << 12) | Int64(sequence & 0xFFF)
+        let currentWorkerId = workerId.load(ordering: .relaxed)
+        
+        return (timestamp << 22) | (Int64(currentWorkerId) << 12) | Int64(currentSequence & 0xFFF)
     }
 }
 

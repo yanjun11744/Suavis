@@ -16,14 +16,17 @@ let package = Package(
             name: "Suavis",
             targets: ["Suavis"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-atomics.git", from: "1.0.0")
+    ],
     targets: [
         .target(
             name: "Suavis",
-            dependencies: [],
-            path: "Sources/Suavis",
-            sources: [
-                "Suavis.swift",
-            ]),
+            dependencies: [
+                .product(name: "Atomics", package: "swift-atomics")
+            ],
+            path: "Sources/Suavis"
+        ),
         .testTarget(
             name: "SuavisTests",
             dependencies: ["Suavis"]),

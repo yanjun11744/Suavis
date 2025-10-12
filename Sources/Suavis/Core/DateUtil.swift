@@ -5,6 +5,8 @@
 //  Created by Yanjun Sun on 2025/10/12.
 //
 
+import Foundation
+
 // 日期工具（静态方法）
 public enum DateUtil {
     public static func format(_ date: Date, pattern: String = "yyyy-MM-dd HH:mm:ss") -> String {
