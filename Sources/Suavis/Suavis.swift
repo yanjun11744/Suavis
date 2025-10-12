@@ -1,51 +1,14 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+// Sources/Suavis/Suavis.swift
 
-// Sources/MySwiftLibrary/MySwiftLibrary.swift
-
-/// 主库类
-public final class Suavis: Sendable {
+/// Suavis - 优雅的 Swift 工具库
+public enum Suavis {
+    // MARK: - 库信息
+    public static let version = "0.0.1"
+    public static let name = "Suavis"
+    public static let author = "yanjun sun"
     
-    public static let shared = Suavis()
-    
-    let configuration: Configuration
-    
-    private init(configuration: Configuration = .default) {
-        self.configuration = configuration
+    // MARK: - 初始化
+    public static func initialize() {
+        print("🎉 \(name) v\(version) 已初始化")
     }
-    
-    /// 示例公共方法
-    public func greet(name: String) -> String {
-        return "Hello, \(name)!"
-    }
-    
-    /// 异步方法示例
-    public func fetchData() async throws -> String {
-        // 模拟异步操作
-        try await Task.sleep(nanoseconds: 1_000_000_000)
-        return "Data fetched successfully"
-    }
-}
-
-public typealias SV = Suavis
-
-// 配置结构体
-public struct Configuration: Sendable {
-    public let apiKey: String
-    public let environment: Environment
-    
-    public static let `default` = Configuration(
-        apiKey: "",
-        environment: .development
-    )
-    
-    public init(apiKey: String, environment: Environment) {
-        self.apiKey = apiKey
-        self.environment = environment
-    }
-}
-
-public enum Environment: Sendable {
-    case development
-    case production
 }
