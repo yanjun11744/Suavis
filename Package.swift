@@ -23,7 +23,6 @@ let package = Package(
             path: "Sources/Suavis",
             sources: [
                 "Suavis.swift",
-                "Main",
             ]),
         .testTarget(
             name: "SuavisTests",
