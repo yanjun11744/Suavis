@@ -21,3 +21,9 @@ public enum DateUtil {
         return formatter.date(from: dateStr)
     }
 }
+
+public typealias _DateUtil = DateUtil
+
+extension Suavis {
+    public typealias DateUtil = _DateUtil
+}
