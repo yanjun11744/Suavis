@@ -112,32 +112,54 @@ public final class HttpClient: Sendable {
     // MARK: - HTTP 方法
     
     /// GET请求
+    /// - Parameters:
+    ///   - path: 请求路径
+    ///   - headers: 请求头，默认值为 nil
+    /// - Returns: HTTP 响应对象
     public func get(_ path: String, headers: [String: String]? = nil) async throws -> HttpResponse {
         return try await request(path: path, method: "GET", headers: headers)
     }
     
     /// POST请求
+    /// - Parameters:
+    ///   - path: 请求路径
+    ///   - body: 请求体数据，默认值为 nil
+    ///   - headers: 请求头，默认值为 nil
+    /// - Returns: HTTP 响应对象
     public func post(_ path: String, body: Data? = nil, headers: [String: String]? = nil) async throws -> HttpResponse {
         return try await request(path: path, method: "POST", body: body, headers: headers)
     }
     
     /// PUT请求
+    /// - Parameters:
+    ///   - path: 请求路径
+    ///   - body: 请求体数据，默认值为 nil
+    ///   - headers: 请求头，默认值为 nil
+    /// - Returns: HTTP 响应对象
     public func put(_ path: String, body: Data? = nil, headers: [String: String]? = nil) async throws -> HttpResponse {
         return try await request(path: path, method: "PUT", body: body, headers: headers)
     }
     
     /// DELETE请求
+    /// - Parameters:
+    ///   - path: 请求路径
+    ///   - headers: 请求头，默认值为 nil
+    /// - Returns: HTTP 响应对象
     public func delete(_ path: String, headers: [String: String]? = nil) async throws -> HttpResponse {
         return try await request(path: path, method: "DELETE", headers: headers)
     }
     
     /// PATCH请求
+    /// - Parameters:
+    ///   - path: 请求路径
+    ///   - body: 请求体数据，默认值为 nil
+    ///   - headers: 请求头，默认值为 nil
+    /// - Returns: HTTP 响应对象
     public func patch(_ path: String, body: Data? = nil, headers: [String: String]? = nil) async throws -> HttpResponse {
         return try await request(path: path, method: "PATCH", body: body, headers: headers)
     }
     
     // MARK: - 核心请求方法
-    
     private func request(path: String, method: String, body: Data? = nil, headers: [String: String]? = nil) async throws -> HttpResponse {
         let urlString = buildURL(path: path)
         guard let requestUrl = URL(string: urlString) else {
@@ -172,6 +194,10 @@ public final class HttpClient: Sendable {
         )
     }
     
+    /// 构建完整 URL
+    /// - Parameters:
+    ///   - path: 请求路径
+    /// - Returns: 完整的 URL 字符串
     private func buildURL(path: String) -> String {
         if let baseURL = config.baseURL {
             if baseURL.hasSuffix("/") && path.hasPrefix("/") {

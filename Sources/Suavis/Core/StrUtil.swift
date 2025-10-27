@@ -28,11 +28,17 @@ public enum StrUtil {
     }
     
     /// 去除首尾空格
+    /// - Parameters:
+    ///   - str: 要处理的字符串
+    /// - Returns: 去除首尾空格后的字符串
     public static func trim(_ str: String) -> String {
         return str.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     /// 转换为驼峰命名
+    /// - Parameters:
+    ///   - str: 要转换的字符串，下划线分隔
+    /// - Returns: 转换后的驼峰命名字符串
     public static func camelCase(_ str: String) -> String {
         let components = str.components(separatedBy: "_")
         return components.enumerated().map { index, component in
